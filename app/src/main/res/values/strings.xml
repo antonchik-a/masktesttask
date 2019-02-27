@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">TestTask</string>
+
+    <string name="main_activity_url_hint">Input URL</string>
+    <string name="main_activity_regex_hint">Input Mask</string>
+    <string name="main_activity_button_title">Parse</string>
+    <string name="main_activity_url_error">Wrong url</string>
+    <string name="main_activity_regex_error">Wrong regular expression</string>
+    <string name="main_activity_parse_finished">Parsing process has been finished</string>
+</resources>
