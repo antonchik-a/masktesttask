@@ -14,7 +14,7 @@ import com.regextest.android.presentation.MainPresenter
 import com.regextest.android.presentation.MainView
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(), MainView{
+class MainActivity : AppCompatActivity(), MainView {
 
 
     lateinit var adapter: ResultAdapter
@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity(), MainView{
 
         MainPresenter.view = this
 
-        adapter = ResultAdapter(this, object: ResultAdapter.ResultClick{
+        adapter = ResultAdapter(this, object : ResultAdapter.ResultClick {
             override fun checkedResult(index: Int, isChecked: Boolean) {
                 MainPresenter.checkedResult(index, isChecked)
             }
@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity(), MainView{
         })
         listView?.adapter = adapter
 
-        url?.addTextChangedListener(object: TextWatcher {
+        url?.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
             }
 
@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity(), MainView{
             }
         })
 
-        regex?.addTextChangedListener(object : TextWatcher{
+        regex?.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
             }
 
@@ -70,9 +70,9 @@ class MainActivity : AppCompatActivity(), MainView{
     }
 
     override fun showProgress(b: Boolean) {
-        if(b) {
+        if (b) {
             progressBar?.visibility = VISIBLE
-        }else{
+        } else {
             progressBar?.visibility = GONE
         }
     }
@@ -85,13 +85,13 @@ class MainActivity : AppCompatActivity(), MainView{
     override fun onDestroy() {
         super.onDestroy()
         MainPresenter.view = null
-        if(isFinishing){
+        if (isFinishing) {
             MainPresenter.finishParser()
         }
     }
 
     override fun showError(error: Int) {
-        Toast.makeText(this, resources.getString(error),Toast.LENGTH_LONG).show()
+        Toast.makeText(this, resources.getString(error), Toast.LENGTH_LONG).show()
     }
 
     override fun showData(resultsPage: MutableList<ParseResult>) {
@@ -111,32 +111,27 @@ class MainActivity : AppCompatActivity(), MainView{
     }
 
     override fun showOutputRegex(parseMask: String?) {
-        parsedRegex?.setText( "Regex for mask: $parseMask")
+        parsedRegex?.setText("Regex for mask: $parseMask")
     }
 
     override fun setCopyButtonVisible(b: Boolean) {
-        if(b){
+        if (b) {
             appBarRightIcon?.visibility = VISIBLE
-        }else{
+        } else {
             appBarRightIcon?.visibility = GONE
         }
     }
 
     override fun showMessage(message: Int) {
-        Toast.makeText(this, resources.getString(message),Toast.LENGTH_LONG).show()
+        Toast.makeText(this, resources.getString(message), Toast.LENGTH_LONG).show()
     }
 
 
-    override fun setClipboard( text: String) {
-        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
-            val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as android.text.ClipboardManager
-            clipboard.text = text
-        } else {
-            val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as android.content.ClipboardManager
-            val clip = android.content.ClipData.newPlainText("Copied Text", text)
-            clipboard.primaryClip = clip
-        }
-        Toast.makeText(this, "Text copied",Toast.LENGTH_LONG).show()
+    override fun setClipboard(text: String) {
+        val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as android.content.ClipboardManager
+        val clip = android.content.ClipData.newPlainText("Copied Text", text)
+        clipboard.primaryClip = clip
+        Toast.makeText(this, "Text copied", Toast.LENGTH_LONG).show()
     }
 
 

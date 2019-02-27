@@ -39,25 +39,16 @@ class ResultAdapter(var context: Context,var delegate: ResultClick) : BaseAdapte
         return position.toLong()
     }
 
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        Log.d(LOG_TAG, "get view position $position")
-        var view: View
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View  = (convertView?.apply {
+        holder = convertView.tag as ViewHolder
+    } ?: inflater.inflate(R.layout.item_result,parent, false).apply {
 
-        if (convertView == null) {
+        holder = ViewHolder()
+        holder.checkBox = this.findViewById(R.id.checkBox)
+        holder.textView = this.findViewById(R.id.value)
 
-            view = inflater.inflate(R.layout.item_result, parent, false)
-
-            holder = ViewHolder()
-            holder.checkBox = view.findViewById(R.id.checkBox)
-            holder.textView = view.findViewById(R.id.value)
-
-            view.tag = holder
-
-        }else{
-            view = convertView!!
-            holder = convertView.tag as ViewHolder
-        }
-
+        this.tag = holder
+    }).apply {
         val result = data.get(position)
         holder.textView?.setText(result.value)
         holder.checkBox?.setOnCheckedChangeListener(null)
@@ -70,10 +61,7 @@ class ResultAdapter(var context: Context,var delegate: ResultClick) : BaseAdapte
         if(position == data.size - 1){
             delegate?.loadMore(position)
         }
-
-        return view
     }
-
 
     fun showData(resultsPage: MutableList<ParseResult>) {
         data.clear()

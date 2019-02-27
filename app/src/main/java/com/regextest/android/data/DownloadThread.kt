@@ -27,10 +27,8 @@ class DownloadThread(var queue: BlockingQueue<Any>, var url: String) : Thread() 
             reader.close()
         }catch (ex: IOException) {
             Log.e(LOG_TAG, ex.message)
-            queue.put(true)
         } catch (ex: InterruptedException) {
             Log.e(LOG_TAG, ex.message)
-            queue.put(true)
         } finally {
             queue.put(true)
         }
